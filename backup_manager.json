@@ -1,0 +1,22 @@
+{
+  "Games": [
+    {
+      "Name": "test",
+      "Source": "D:\\games\\test",
+      "Backup": "D:\\saveGames\\BackupNew",
+      "IsSelected": true
+    },
+    {
+      "Name": "test1",
+      "Source": "D:\\games\\test1",
+      "Backup": "D:\\saveGames\\BackupNew",
+      "IsSelected": true
+    }
+  ],
+  "Notifications": true,
+  "DefaultBackupDir": "D:\\saveGames\\BackupNew",
+  "AutoBackupEnabled": false,
+  "AutoBackupInterval": "1 hour",
+  "LastBackupTime": "2024-01-01T00:00:00",
+  "StartupEnabled": false
+}
