@@ -4,13 +4,19 @@
       "Name": "test",
       "Source": "D:\\games\\test",
       "Backup": "D:\\saveGames\\BackupNew",
-      "IsSelected": true
+      "IsSelected": true,
+      "BackupPath": "D:\\saveGames\\BackupNew\\test",
+      "SizeMB": "0,00 MB",
+      "BackupCount": 0
     },
     {
       "Name": "test1",
       "Source": "D:\\games\\test1",
       "Backup": "D:\\saveGames\\BackupNew",
-      "IsSelected": true
+      "IsSelected": true,
+      "BackupPath": "D:\\saveGames\\BackupNew\\test1",
+      "SizeMB": "0,00 MB",
+      "BackupCount": 0
     }
   ],
   "Notifications": true,

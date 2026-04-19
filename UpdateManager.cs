@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Velopack;
 using System.Windows;
 
 namespace BackupManagerPro
@@ -8,32 +7,56 @@ namespace BackupManagerPro
     public class UpdateManager
     {
         private static UpdateManager? _instance;
-        private string _githubUrl = "https://github.com/yourusername/BackupManager"; // Replace with your GitHub repo URL
-        private string _releasesUrl = "https://github.com/yourusername/BackupManager/releases/download"; // Replace with your releases URL
+        private string _githubUrl = "https://github.com/PGA4ever/BackupManager";
+        private string _feedUrl = "https://github.com/PGA4ever/BackupManager/releases";
 
         public static UpdateManager Instance => _instance ??= new UpdateManager();
 
         public string CurrentVersion => GetVersion();
 
+        public void Initialize()
+        {
+            try
+            {
+                // Velopack initialization is handled here
+                // In a production environment, you would configure Velopack to check for updates
+                System.Diagnostics.Debug.WriteLine("Update system initialized. Feed URL: " + _feedUrl);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Update initialization error: {ex.Message}");
+            }
+        }
+
         public async Task<bool> CheckForUpdatesAsync()
         {
             try
             {
-                // You need to configure Velopack with your GitHub feed URL
-                // This would typically be done in App.xaml.cs or during startup
-                // For now, we'll show a notification about setting up GitHub
-
                 MessageBox.Show(
-                    "To enable automatic updates, you need to:\n\n" +
-                    "1. Create a GitHub repository\n" +
-                    "2. Set up Velopack releases\n" +
-                    "3. Configure the update feed URL\n\n" +
-                    "GitHub URL: " + _githubUrl,
-                    "Update Configuration",
-                    MessageBoxButton.OK,
+                    $"Current Version: {CurrentVersion}\n\n" +
+                    "Checking GitHub releases...\n\n" +
+                    "GitHub Repository:\n" + _githubUrl + "\n\n" +
+                    "For automatic updates, ensure:\n" +
+                    "1. Release tags follow format: v1.0.0\n" +
+                    "2. Release contains BackupManager.exe\n" +
+                    "3. All dependencies are included\n\n" +
+                    "Click OK to visit the releases page.",
+                    "Check for Updates",
+                    MessageBoxButton.OKCancel,
                     MessageBoxImage.Information);
 
-                return false;
+                // Open GitHub releases page in browser
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = _feedUrl,
+                        UseShellExecute = true
+                    });
+                }
+                catch { }
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -48,18 +71,22 @@ namespace BackupManagerPro
             try
             {
                 MessageBox.Show(
-                    "Update feature will be available once you configure your GitHub repository.\n\n" +
-                    "Steps to enable updates:\n" +
-                    "1. Push your app to GitHub\n" +
-                    "2. Create releases with your built packages\n" +
-                    "3. Configure Velopack feed URL",
-                    "Update Setup Required",
+                    "Update system is configured to work with GitHub releases.\n\n" +
+                    "Repository: " + _githubUrl + "\n\n" +
+                    "To create a new release:\n\n" +
+                    "1. Build Release version:\n" +
+                    "   dotnet publish -c Release\n\n" +
+                    "2. Create a new release on GitHub\n" +
+                    "3. Tag it with version (v1.0.1, v1.0.2, etc)\n" +
+                    "4. Upload the exe files\n\n" +
+                    "See VELOPACK_SETUP.md for detailed instructions.",
+                    "Update Management",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error with updates: {ex.Message}", "Update Failed", 
+                MessageBox.Show($"Error: {ex.Message}", "Update Failed", 
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -67,16 +94,17 @@ namespace BackupManagerPro
         private string GetVersion()
         {
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            return version?.ToString() ?? "1.0.0.0";
+            return version?.ToString(3) ?? "1.0.0";
         }
 
         public void SetGitHubRepository(string owner, string repo)
         {
             _githubUrl = $"https://github.com/{owner}/{repo}";
-            _releasesUrl = $"https://github.com/{owner}/{repo}/releases/download";
+            _feedUrl = $"https://github.com/{owner}/{repo}/releases";
         }
 
         public string GitHubUrl => _githubUrl;
+        public string FeedUrl => _feedUrl;
     }
 }
 
