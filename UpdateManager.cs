@@ -7,7 +7,7 @@ namespace BackupManagerPro
     public class UpdateManager
     {
         private static UpdateManager? _instance;
-        private string _githubUrl = "https://github.com/PGA4ever/BackupManager";
+        private string _githubUrl = "https://github.com/PGA4ever/`";
         private string _feedUrl = "https://github.com/PGA4ever/BackupManager/releases";
 
         public static UpdateManager Instance => _instance ??= new UpdateManager();
@@ -107,5 +107,6 @@ namespace BackupManagerPro
         public string FeedUrl => _feedUrl;
     }
 }
+
 
 
